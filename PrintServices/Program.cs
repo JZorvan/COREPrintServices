@@ -11,13 +11,20 @@ namespace PrintServices
     {
         static void Main(string[] args)
         {
-            List<Task> tasks = new List<Task>();
-            Task a = new Task(() => { WordHandler.convertToPdf(); });
-            Task b = new Task(() => { PdfHandler.renameFiles(); });
-            Task c = new Task(() => { ConsoleHandler.printToConsole(); });
-            tasks.Add(a);
-            tasks.Add(b);
-            tasks.Add(c);
+
+            List<Task> tasks = new List<Task>()
+            {
+                new Task(() => WordHandler.convertToPdf()),
+                new Task(() => PdfHandler.renameFiles()),
+                new Task(() => ConsoleHandler.printToConsole())
+            };
+
+            //Task a = new Task(() => { WordHandler.convertToPdf(); });
+            //Task b = new Task(() => { PdfHandler.renameFiles(); });
+            //Task c = new Task(() => { ConsoleHandler.printToConsole(); });
+            //tasks.Add(a, b, c);
+            //tasks.Add(b);
+            //tasks.Add(c);
             foreach (Task t in tasks)
             {
                 t.Start();
