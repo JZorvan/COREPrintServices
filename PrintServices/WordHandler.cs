@@ -3,9 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Office.Interop.Word;
 using System.IO;
-using SautinSoft;
 using WordToPDF;
 
 namespace PrintServices
@@ -14,8 +12,9 @@ namespace PrintServices
     {
         public static void convertToPdf()
         {
+            var wordFiles = Directory.EnumerateFiles("C:/PrintServices", "*.docx");
             int i = 0;
-            foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.docx"))
+            foreach (string file in wordFiles)
             {
                 if (Path.GetFileName(file).StartsWith("~") == false)
                 {
