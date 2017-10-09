@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Office.Interop.Word;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,9 +11,10 @@ namespace PrintServices
     {
         static void Main(string[] args)
         {
-            PdfHandler.renameFiles();
-            ConsoleHandler.PrintToConsole();
-            Console.Read();
+            WordHandler.convertToPdf();
+            //PdfHandler.renameFiles();
+            //ConsoleHandler.PrintToConsole();
+            Console.ReadKey();
         }
     }
 }
