@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,25 +14,25 @@ namespace PrintServices
             Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
             {
-                if (Total.TwoSidedFiles.Contains(file))
+                if (FileInfo.TwoSidedFiles.Contains(file))
                 {
-                    Console.WriteLine(Filename.Trimmer(file) + " - " + (PdfReader.getNumberOfPages(file) / 2));
+                    Console.WriteLine(PdfHandler.filenameTrimmer(file) + " - " + (Counter.getNumberOfPages(file) / 2));
                 }
                 else
                 {
-                    Console.WriteLine(Filename.Trimmer(file) + " - " + PdfReader.getNumberOfPages(file));
+                    Console.WriteLine(PdfHandler.filenameTrimmer(file) + " - " + Counter.getNumberOfPages(file));
                 }
-                Total.AddToTotalCount(file, PdfReader.getNumberOfPages(file));
+                Counter.AddToTotalCount(file, Counter.getNumberOfPages(file));
             }
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Total Entries: ");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(Total.totalDocCount);
+            Console.WriteLine(Counter.totalDocCount);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Write("Total Pages: ");
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine(Total.totalPageCount);
+            Console.WriteLine(Counter.totalPageCount);
         }
     }
 }
