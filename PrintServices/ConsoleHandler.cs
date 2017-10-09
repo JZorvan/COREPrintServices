@@ -9,7 +9,7 @@ namespace PrintServices
 {
     class ConsoleHandler
     {
-        public static void PrintToConsole()
+        public static void printToConsole()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
