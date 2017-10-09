@@ -10,6 +10,9 @@ namespace PrintServices
     {
         static void Main(string[] args)
         {
+            PdfHandler.renameFiles();
+            ConsoleHandler.PrintToConsole();
+            Console.Read();
         }
     }
 }
