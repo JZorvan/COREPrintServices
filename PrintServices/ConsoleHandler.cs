@@ -11,6 +11,7 @@ namespace PrintServices
     {
         public static void printToConsole()
         {
+            Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
             {

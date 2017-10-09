@@ -19,17 +19,12 @@ namespace PrintServices
                 new Task(() => ConsoleHandler.printToConsole())
             };
 
-            //Task a = new Task(() => { WordHandler.convertToPdf(); });
-            //Task b = new Task(() => { PdfHandler.renameFiles(); });
-            //Task c = new Task(() => { ConsoleHandler.printToConsole(); });
-            //tasks.Add(a, b, c);
-            //tasks.Add(b);
-            //tasks.Add(c);
             foreach (Task t in tasks)
             {
                 t.Start();
                 t.Wait();
             }
+
             Console.ReadKey();
         }
     }

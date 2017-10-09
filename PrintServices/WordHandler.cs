@@ -26,6 +26,7 @@ namespace PrintServices
                     File.Delete(file);
                 }
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine(i + " files have been converted to Pdf format.");
         }
     }
