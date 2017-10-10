@@ -3,11 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace PrintServices
 {
     class FileInfo
     {
+        public static void remove3502AA()
+        {
+            int i = 0;
+            foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*3502AA001*"))
+            {
+                File.Delete(file);
+                i++;
+            }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(i + " lp32-3502-3502AA001 jobs have been deleted because they do not need to be printed.");
+        }
         public static List<string> TwoSidedFiles = new List<string>()
         {
             "C:/PrintServices\\lp32-15C.pdf",
