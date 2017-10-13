@@ -9,6 +9,22 @@ namespace PrintServices
 {
     class PdfHandler
     {
+        public static void findDuplicates()
+        {
+            string[] pdfFiles = Directory.GetFiles("C:/PrintServices", "*.pdf");
+            foreach (string filename in FileInfo.allFiles)
+            {
+                var result = Array.FindAll(pdfFiles, s => s.Contains(filename));
+                if (result.Count() > 1)
+                {
+                    Console.WriteLine(filename + " has " + result.Count() + " files that need to be combined.");
+                } 
+            }
+        }
+        public static void combinePdfs()
+        {
+
+        }
         public static void renameFiles()
         {
             foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
