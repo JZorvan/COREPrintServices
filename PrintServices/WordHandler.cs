@@ -27,7 +27,7 @@ namespace PrintServices
                 }
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(i + " files have been converted to Pdf format.");
+            Console.WriteLine("\r\n" + i + " files have been converted to Pdf format.\r\n");
         }
     }
 }

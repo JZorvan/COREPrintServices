@@ -18,7 +18,7 @@ namespace PrintServices
                 i++;
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(i + " lp32-3502-3502AA001 jobs have been deleted because they do not need to be printed.");
+            Console.WriteLine("\r\n" + i + " lp32-3502-3502AA001 jobs have been deleted because they do not need to be printed.");
         }
         public static List<string> allFiles = new List<string>()
         {
