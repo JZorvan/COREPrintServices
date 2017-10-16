@@ -16,6 +16,7 @@ namespace PrintServices
             List<Task> tasks = new List<Task>()
             {
                 new Task(() => WordHandler.convertToPdf()),
+                new Task(() => PdfHandler.findDuplicates()),
                 new Task(() => PdfHandler.renameFiles()),
                 new Task(() => ConsoleHandler.printToConsole())
             };
