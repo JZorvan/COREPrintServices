@@ -18,6 +18,7 @@ namespace PrintServices
                 new Task(() => WordHandler.convertToPdf()),
                 new Task(() => PdfHandler.findDuplicates()),
                 new Task(() => PdfHandler.renameFiles()),
+                new Task(() => ExcelHandler.populateSpreadsheet()),
                 new Task(() => ConsoleHandler.printToConsole())
             };
 
