@@ -10,6 +10,14 @@ namespace PrintServices
 {
     class ExcelHandler
     {
+        public static string getSpreadsheetName()
+        {
+            string today = DateTime.Now.ToString("MM.dd.yyyy");
+            
+            string filename = today + " MasterList.xlsm";
+            Console.WriteLine(filename);
+            return filename;
+        }
         public static void populateSpreadsheet()
         {
             Console.WriteLine("Starting to populate spreadsheet.");
@@ -49,7 +57,7 @@ namespace PrintServices
                 worksheet.Cells[rowNum, 2] = kvp.Value;
             }
 
-            workbook.SaveAs(Filename: "c:\\PrintServices\\10.18.17 MasterList.xlsm");
+            workbook.SaveAs(Filename: "c:\\PrintServices\\10.20.17 MasterList.xlsm");
 
             excel.DisplayAlerts = true;
             workbook.Close();
