@@ -11,22 +11,6 @@ namespace PrintServices
     {
         public static void printToConsole()
         {
-            //foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
-            //{
-            //    string fileName = PdfHandler.filenameTrimmer(file);
-            //    string pageCount = "";
-            //    Dictionary<string, string> countDictionary = new Dictionary<string, string>();
-            //    if (FileInfo.TwoSidedFiles.Contains(file))
-            //    {
-            //        pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
-            //    }
-            //    else
-            //    {
-            //        pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
-            //    }
-            //    countDictionary.Add(fileName, pageCount);
-            //    Counter.AddToTotalCount(file, Counter.getNumberOfPages(file));
-            //}
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Cyan;
             foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
@@ -39,7 +23,6 @@ namespace PrintServices
                 {
                     Console.WriteLine(PdfHandler.filenameTrimmer(file) + " - " + Counter.getNumberOfPages(file));
                 }
-                //Counter.AddToTotalCount(file, Counter.getNumberOfPages(file));
             }
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.White;

@@ -34,53 +34,5 @@ namespace PrintServices
                 return matches.Count;
             }
         }
-        //public static void createCountDictionary()
-        //{
-        //    Dictionary<string, string> countDictionary = new Dictionary<string, string>();
-        //    string fileName = "";
-        //    string pageCount = "";
-        //    foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
-        //    {
-        //        fileName = PdfHandler.filenameTrimmer(file);
-
-        //        if (FileInfo.TwoSidedFiles.Contains(file))
-        //        {
-        //            pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
-        //        }
-        //        else
-        //        {
-        //            pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
-        //        }
-
-        //        countDictionary.Add(fileName, pageCount);
-        //        Counter.AddToTotalCount(file, Counter.getNumberOfPages(file));
-
-        //    }
-        //    return countDictionary;
-        //}
-        //public static Dictionary<string, string> createCountDictionary()
-        //{
-        //    Dictionary<string, string> countDictionary = new Dictionary<string, string>();
-        //    string fileName = "";
-        //    string pageCount = "";
-        //    foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
-        //    {
-        //        fileName = PdfHandler.filenameTrimmer(file);
-
-        //        if (FileInfo.TwoSidedFiles.Contains(file))
-        //        {
-        //            pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
-        //        }
-        //        else
-        //        {
-        //            pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
-        //        }
-
-        //        countDictionary.Add(fileName, pageCount);
-        //        Counter.AddToTotalCount(file, Counter.getNumberOfPages(file));
-
-        //    }
-        //    return countDictionary;
-        //}
     }
 }

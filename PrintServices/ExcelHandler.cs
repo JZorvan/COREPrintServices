@@ -57,7 +57,7 @@ namespace PrintServices
                 worksheet.Cells[rowNum, 2] = kvp.Value;
             }
 
-            workbook.SaveAs(Filename: "c:\\PrintServices\\10.20.17 MasterList.xlsm");
+            workbook.SaveAs(Filename: "c:\\PrintServices\\" + getSpreadsheetName());
 
             excel.DisplayAlerts = true;
             workbook.Close();
