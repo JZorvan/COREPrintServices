@@ -56,7 +56,8 @@ namespace PrintServices.DAL
         }
         public void ClearRepository(List<Job> jobList)
         {
-            Context.Jobs.RemoveRange(jobList);
+            Context.Database.ExecuteSqlCommand("delete from dbo.Jobs");
+            //Context.Jobs.RemoveRange(jobList);
             Context.SaveChanges();
         }
     }

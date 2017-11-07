@@ -14,13 +14,15 @@ namespace PrintServices
     {
         static void Main(string[] args)
         {
-            JobRepo jobRepo = new JobRepo();
-            //jobRepo.ImportMasterSpreadsheet();
-            List<Job> jobs = jobRepo.GetJobs();
+            JobRepo db = new JobRepo();
+            db.ImportMasterSpreadsheet();
+            List<Job> jobs = db.GetJobs();
             foreach (Job job in jobs)
             {
                 Console.WriteLine(job.FileName);
             }
+            db.ClearRepository(jobs);
+            Console.WriteLine(jobs.Count);
 
 
 
