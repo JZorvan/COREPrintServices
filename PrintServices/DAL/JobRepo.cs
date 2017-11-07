@@ -54,5 +54,10 @@ namespace PrintServices.DAL
             int i = 1;
             return Context.Jobs.ToList();
         }
+        public void ClearRepository(List<Job> jobList)
+        {
+            Context.Jobs.RemoveRange(jobList);
+            Context.SaveChanges();
+        }
     }
 }
