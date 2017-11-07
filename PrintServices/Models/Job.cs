@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ToneDownThatBackEnd.Models
+namespace PrintServices.Models
 {
     public class Job
     {
