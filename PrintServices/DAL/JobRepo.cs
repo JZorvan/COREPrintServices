@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ToneDownThatBackEnd.Models;
+using PrintServices.Models;
 using Microsoft.Office.Interop.Excel;
 
 namespace PrintServices.DAL
@@ -22,36 +22,27 @@ namespace PrintServices.DAL
         }
         public void ImportMasterSpreadsheet()
         {
-            Console.WriteLine("I'm trying to read the MasterList.");
             Application excel = new Application();
-            //excel.DisplayAlerts = false;
             Workbook workbook = excel.Workbooks.Open("C:/PrintServices\\TestMasterList.xlsx", ReadOnly: false, Editable: false);
             Worksheet worksheet = workbook.Worksheets.Item[1] as Worksheet;
             if (worksheet == null)
                 return;
 
-            Range fileNames = worksheet.Columns["A"];
-            Range pageCounts = worksheet.Columns["B"];
-            Range PrintQueues = worksheet.Columns["C"];
-            Range Boards = worksheet.Columns["D"];
-            Range Dispositions = worksheet.Columns["E"];
             Range range = worksheet.UsedRange;
-            int totalColumns = worksheet.UsedRange.Columns.Count;
             int totalRows = worksheet.UsedRange.Rows.Count;
-            Console.WriteLine(totalColumns);
             Console.WriteLine(totalRows);
 
             for (int i = 2; i <= totalRows; i++)
             {
-                Console.WriteLine(range.Cells[i, 1].Value);
-                Console.WriteLine(range.Cells[i, 2].Value);
-                Console.WriteLine(range.Cells[i, 3].Value);
-                Console.WriteLine(range.Cells[i, 4].Value);
-                Console.WriteLine(range.Cells[i, 5].Value);
-
+                Job job = new Job();
+                job.FileName = range.Cells[i, 1].Value;
+                job.PageCount = Convert.ToInt32(range.Cells[i, 2].Value);
+                job.PrintQueue = range.Cells[i, 3].Value;
+                job.Board = range.Cells[i, 4].Value;
+                job.Disposition = range.Cells[i, 5].Value;
+                Context.Jobs.Add(job);
+                Context.SaveChanges();    
             }
-
-
             workbook.Close();
             excel.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);

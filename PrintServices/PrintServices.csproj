@@ -82,6 +82,11 @@
     <Compile Include="DAL\JobRepo.cs" />
     <Compile Include="ExcelHandler.cs" />
     <Compile Include="FileInfo.cs" />
+    <Compile Include="Migrations\201711071844203_InitialCreate.cs" />
+    <Compile Include="Migrations\201711071844203_InitialCreate.Designer.cs">
+      <DependentUpon>201711071844203_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Job.cs" />
     <Compile Include="PdfHandler.cs" />
     <Compile Include="Program.cs" />
@@ -103,6 +108,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201711071844203_InitialCreate.resx">
+      <DependentUpon>201711071844203_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
