@@ -78,9 +78,11 @@
   <ItemGroup>
     <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Counter.cs" />
+    <Compile Include="DAL\JobContext.cs" />
+    <Compile Include="DAL\JobRepo.cs" />
     <Compile Include="ExcelHandler.cs" />
     <Compile Include="FileInfo.cs" />
-    <Compile Include="Models\Class1.cs" />
+    <Compile Include="Models\Job.cs" />
     <Compile Include="PdfHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
