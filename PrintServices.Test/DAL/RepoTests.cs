@@ -69,8 +69,18 @@ namespace PrintServices.DAL.Tests
         public void CanImportMockData()
         {
             ImportMockData();
+            
+            Assert.IsTrue(Jobs.Count > 0);
+        }
+        [TestMethod]
+        public void CanGetJobs()
+        {
+            ImportMockData();
 
-            Assert.IsTrue(Jobs.Count > 100);
+            List<Job> list_of_jobs = null;
+            list_of_jobs = repo.GetJobs();
+
+            Assert.IsNotNull(list_of_jobs);
         }
 
 
