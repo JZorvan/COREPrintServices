@@ -65,6 +65,13 @@ namespace PrintServices.DAL.Tests
             TearDown();
             Assert.IsNull(repo);
         }
+        [TestMethod]
+        public void CanImportMockData()
+        {
+            ImportMockData();
+
+            Assert.IsTrue(Jobs.Count > 100);
+        }
 
 
     }
