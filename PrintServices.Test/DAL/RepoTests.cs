@@ -76,13 +76,9 @@ namespace PrintServices.DAL.Tests
         public void CanGetJobs()
         {
             ImportMockData();
-
-            List<Job> list_of_jobs = null;
-            list_of_jobs = repo.GetJobs();
+            List<Job> list_of_jobs = repo.GetJobs();
 
             Assert.IsNotNull(list_of_jobs);
         }
-
-
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PrintServices.Models;
 using Microsoft.Office.Interop.Excel;
+using System.Data.Entity;
 
 namespace PrintServices.DAL
 {
@@ -30,7 +31,6 @@ namespace PrintServices.DAL
 
             Range range = worksheet.UsedRange;
             int totalRows = worksheet.UsedRange.Rows.Count;
-            Console.WriteLine(totalRows);
 
             for (int i = 2; i <= totalRows; i++)
             {
@@ -54,10 +54,9 @@ namespace PrintServices.DAL
             int i = 1;
             return Context.Jobs.ToList();
         }
-        public void ClearRepository(List<Job> jobList)
+        public void ClearRepository()
         {
-            Context.Database.ExecuteSqlCommand("delete from dbo.Jobs");
-            //Context.Jobs.RemoveRange(jobList);
+            Context.Jobs.RemoveRange(Context.Jobs);
             Context.SaveChanges();
         }
     }

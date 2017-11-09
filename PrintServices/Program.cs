@@ -7,6 +7,7 @@ using System.Threading;
 using System.IO;
 using PrintServices.DAL;
 using PrintServices.Models;
+using System.Data.Entity;
 
 namespace PrintServices
 {
@@ -17,12 +18,7 @@ namespace PrintServices
             JobRepo db = new JobRepo();
             db.ImportMasterSpreadsheet();
             List<Job> jobs = db.GetJobs();
-            foreach (Job job in jobs)
-            {
-                Console.WriteLine(job.FileName);
-            }
-            db.ClearRepository(jobs);
-            Console.WriteLine(jobs.Count);
+            db.ClearRepository();
 
 
 
