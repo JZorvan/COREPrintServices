@@ -7,22 +7,24 @@ using System.Threading.Tasks;
 using iTextSharp;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using PrintServices.Models;
 
 namespace PrintServices
 {
     class PdfHandler
     {
-        public static void findDuplicates()
+
+        public static void findDuplicates(List<Job> joblist)
         {
             string[] pdfFiles = Directory.GetFiles("C:/PrintServices", "*.pdf");
             List<string> duplicates = new List<string>();
-            foreach (string jobName in FileInfo.allFiles)
+            foreach (Job job in joblist)
             {
-                var result = Array.FindAll(pdfFiles, s => s.Contains(jobName));
+                var result = Array.FindAll(pdfFiles, s => s.Contains(filenameTrimmer(job.FileName)));
                 if (result.Count() > 1)
                 {
                     duplicates = result.ToList();
-                    mergePdfs(duplicates, jobName, result.Count());
+                    mergePdfs(duplicates, filenameTrimmer(job.FileName), result.Count());
                 } 
             }
         }
@@ -107,6 +109,15 @@ namespace PrintServices
             string trimmedFilename = "";
 
             trimmedFilename = file.Substring(17).TrimEnd(pdfString);
+
+            return trimmedFilename;
+        }
+        public static string filenameTrimmer(Job job)
+        {
+            char[] pdfString = { '.', 'p', 'd', 'f' };
+            string trimmedFilename = "";
+
+            trimmedFilename = job.FileName.TrimEnd(pdfString);
 
             return trimmedFilename;
         }
