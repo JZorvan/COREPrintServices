@@ -4,21 +4,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Microsoft.Office.Interop.Excel;
 
 namespace PrintServices
 {
     class FileInfo
     {
-        public static void remove3502AA()
+        public static void removeFilesToDelete()
         {
-            int i = 0;
-            foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*3502AA001*"))
+            Application excel = new Application();
+            Workbook workbook = excel.Workbooks.Open("C:/PrintServices\\JobsToDelete.xlsx", ReadOnly: true, Editable: false);
+            Worksheet worksheet = workbook.Worksheets.Item[1] as Worksheet;
+            if (worksheet == null)
+                return;
+
+            Range range = worksheet.UsedRange;
+            int totalRows = worksheet.UsedRange.Rows.Count;
+            string pattern;
+            for (int i = 1; i <= totalRows; i++)
             {
-                File.Delete(file);
-                i++;
+                pattern = range.Cells[i, 1].Value;
+                foreach (string file in Directory.EnumerateFiles("C:/PrintServices", pattern))
+                {
+                    File.Delete(file);
+                }
             }
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\r\n" + i + " lp32-3502-3502AA001 job has been deleted because they do not need to be printed.");
+            workbook.Close();
+            excel.Quit();
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(workbook);
+            System.Runtime.InteropServices.Marshal.ReleaseComObject(excel);
         }
         public static List<string> allFiles = new List<string>()
         {

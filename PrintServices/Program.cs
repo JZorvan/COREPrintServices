@@ -28,7 +28,7 @@ namespace PrintServices
                 //string filepath = Path.GetFullPath(Path.Combine(path, ".."));
                 //Console.WriteLine(filepath);
 
-                //FileInfo.remove3502AA();
+                FileInfo.removeFilesToDelete();
 
                 //List<Task> tasks = new List<Task>()
                 //{
