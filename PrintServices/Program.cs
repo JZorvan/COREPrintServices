@@ -15,21 +15,24 @@ namespace PrintServices
     {
         static void Main(string[] args)
         {
-            List<Task> tasks = new List<Task>()
-            {
-                new Task(() => WordHandler.convertToPdf()),
-                new Task(() => PdfHandler.findDuplicates()),
-                new Task(() => PdfHandler.renameFiles()),
-                new Task(() => ExcelHandler.populateSpreadsheet()),
-                new Task(() => ConsoleHandler.printToConsole())
-            };
+            JobRepo db = new JobRepo();
+            Task ImportMasterSpreadsheet = new Task(() => db.ImportMasterSpreadsheet());
+            Task ConvertToPdf = new Task(() => WordHandler.convertToPdf());
+            Task RenameFiles = new Task(() => PdfHandler.renameFiles());
+            Task PopulateSpreadsheet = new Task(() => ExcelHandler.populateSpreadsheet());
+            Task PrintToConsole = new Task(() => ConsoleHandler.printToConsole());
 
-            FileInfo.removeFilesToDelete();
-            tasks[0].Start();
-                tasks[0].Wait();
-            //JobRepo db = new JobRepo();
-            //db.ImportMasterSpreadsheet();
-            //List<Job> jobs = db.GetJobs();
+            ImportMasterSpreadsheet.Start();
+                ImportMasterSpreadsheet.Wait();
+            List<Job> jobs = db.GetJobs();
+            FileInfo.removeFilesToDelete(); 
+            ConvertToPdf.Start();
+                ConvertToPdf.Wait();
+            Task FindDuplicates = new Task(() => PdfHandler.findDuplicates(jobs));
+            FindDuplicates.Start();
+                FindDuplicates.Wait();
+
+
             //db.ClearRepository();
 
             //Notes on making the path automatic for other users:
