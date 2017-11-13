@@ -51,7 +51,7 @@ namespace PrintServices.DAL
         }
         public List<Job> GetJobs()
         {
-            int i = 1;
+            //int i = 1;
             return Context.Jobs.ToList();
         }
         public void ClearRepository()
