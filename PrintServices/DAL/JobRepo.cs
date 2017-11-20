@@ -35,11 +35,11 @@ namespace PrintServices.DAL
             for (int i = 2; i <= totalRows; i++)
             {
                 Job job = new Job();
-                job.FileName = range.Cells[i, 1].Value;
+                job.FileName = range.Cells[i, 1].Value.Trim();
                 job.PageCount = Convert.ToInt32(range.Cells[i, 2].Value);
-                job.PrintQueue = range.Cells[i, 3].Value;
-                job.Board = range.Cells[i, 4].Value;
-                job.Disposition = range.Cells[i, 5].Value;
+                job.PrintQueue = range.Cells[i, 3].Value.Trim();
+                job.Board = range.Cells[i, 4].Value.Trim();
+                job.Disposition = range.Cells[i, 5].Value.Trim();
                 Context.Jobs.Add(job);
                 Context.SaveChanges();    
             }
