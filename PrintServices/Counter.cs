@@ -11,21 +11,21 @@ namespace PrintServices
 {
     class Counter
     {
-        public static int totalPageCount = 0;
-        public static int totalDocCount = 0;
-        public static int AddToTotalCount(string file, int pageCount)
-        {
-            totalDocCount++;
-            if (FileInfo.TwoSidedFiles.Contains(file))
-            {
-                totalPageCount += (pageCount / 2);
-            }
-            else
-            {
-                totalPageCount += pageCount;
-            }
-            return totalPageCount;
-        }
+        //public static int totalPageCount = 0;
+        //public static int totalDocCount = 0;
+        //public static int AddToTotalCount(string file, int pageCount)
+        //{
+        //    totalDocCount++;
+        //    if (FileInfo.TwoSidedFiles.Contains(file))
+        //    {
+        //        totalPageCount += (pageCount / 2);
+        //    }
+        //    else
+        //    {
+        //        totalPageCount += pageCount;
+        //    }
+        //    return totalPageCount;
+        //}
         public static int readNumberOfPages(string filename)
         {
             PdfReader pdfReader = new PdfReader(filename);

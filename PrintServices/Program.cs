@@ -18,9 +18,7 @@ namespace PrintServices
             JobRepo db = new JobRepo();
             Task ImportMasterSpreadsheet = new Task(() => db.ImportMasterSpreadsheet());
             Task ConvertToPdf = new Task(() => WordHandler.convertToPdf());
-            
             Task PopulateSpreadsheet = new Task(() => ExcelHandler.populateSpreadsheet());
-            Task PrintToConsole = new Task(() => ConsoleHandler.printToConsole());
 
             ImportMasterSpreadsheet.Start();
             ImportMasterSpreadsheet.Wait();

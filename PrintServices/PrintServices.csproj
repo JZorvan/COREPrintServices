@@ -80,7 +80,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="DAL\JobContext.cs" />
     <Compile Include="DAL\JobRepo.cs" />

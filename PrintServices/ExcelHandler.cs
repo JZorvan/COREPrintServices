@@ -37,15 +37,14 @@ namespace PrintServices
 
                 if (FileInfo.TwoSidedFiles.Contains(file))
                 {
-                    pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
+                    pageCount = (Counter.readNumberOfPages(file) / 2).ToString();
                 }
                 else
                 {
-                    pageCount = (Counter.getNumberOfPages(file)).ToString();
+                    pageCount = (Counter.readNumberOfPages(file)).ToString();
                 }
 
                 countDictionary.Add(fileName, pageCount);
-                Counter.AddToTotalCount(file, Counter.getNumberOfPages(file));
             }
 
             Range jobColumn = worksheet.Columns["A"];
