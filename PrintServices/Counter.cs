@@ -1,4 +1,5 @@
-﻿using System;
+﻿using iTextSharp.text.pdf;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,14 +26,20 @@ namespace PrintServices
             }
             return totalPageCount;
         }
-        public static int getNumberOfPages(string fileName)
+        public static int readNumberOfPages(string filename)
         {
-            using (StreamReader streamReader = new StreamReader(File.OpenRead(fileName)))
-            {
-                Regex regex = new Regex(@"/Type\s*/Page[^s]");
-                MatchCollection matches = regex.Matches(streamReader.ReadToEnd());
-                return matches.Count;
-            }
+            PdfReader pdfReader = new PdfReader(filename);
+            Console.WriteLine(pdfReader.NumberOfPages);
+            return pdfReader.NumberOfPages;
         }
+        //public static int getNumberOfPages(string fileName)
+        //{
+        //    using (StreamReader streamReader = new StreamReader(File.OpenRead(fileName)))
+        //    {
+        //        Regex regex = new Regex(@"/Type\s*/Page[^s]");
+        //        MatchCollection matches = regex.Matches(streamReader.ReadToEnd());
+        //        return matches.Count;
+        //    }
+        //}
     }
 }
