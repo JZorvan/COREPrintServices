@@ -1,4 +1,5 @@
 ﻿using iTextSharp.text.pdf;
+using PrintServices.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,35 +12,24 @@ namespace PrintServices
 {
     class Counter
     {
-        //public static int totalPageCount = 0;
-        //public static int totalDocCount = 0;
-        //public static int AddToTotalCount(string file, int pageCount)
-        //{
-        //    totalDocCount++;
-        //    if (FileInfo.TwoSidedFiles.Contains(file))
-        //    {
-        //        totalPageCount += (pageCount / 2);
-        //    }
-        //    else
-        //    {
-        //        totalPageCount += pageCount;
-        //    }
-        //    return totalPageCount;
-        //}
         public static int readNumberOfPages(string filename)
         {
             PdfReader pdfReader = new PdfReader(filename);
-            Console.WriteLine(pdfReader.NumberOfPages);
             return pdfReader.NumberOfPages;
         }
-        //public static int getNumberOfPages(string fileName)
-        //{
-        //    using (StreamReader streamReader = new StreamReader(File.OpenRead(fileName)))
-        //    {
-        //        Regex regex = new Regex(@"/Type\s*/Page[^s]");
-        //        MatchCollection matches = regex.Matches(streamReader.ReadToEnd());
-        //        return matches.Count;
-        //    }
-        //}
+        public static List<Job> assignSheetCount(List<Job> jobs)
+        {
+            List<string> files = PdfHandler.getFiles();
+            foreach (string file in files)
+            {
+                string filename = PdfHandler.filenameTrimmer(file) + ".pdf";
+                Job result = jobs.Find(j => j.FileName == filename);
+                if (result != null)
+                {
+                    result.PageCount = readNumberOfPages(file);
+                }
+            }
+            return jobs;
+        }
     }
 }
