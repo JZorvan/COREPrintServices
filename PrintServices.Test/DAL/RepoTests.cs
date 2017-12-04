@@ -80,5 +80,16 @@ namespace PrintServices.DAL.Tests
 
             Assert.IsNotNull(list_of_jobs);
         }
+        [TestMethod]
+        public void CanUpdatePageCount()
+        {
+            ImportMockData();
+
+            repo.UpdatePageCount("lp32-0100.pdf", 8);
+            repo.UpdatePageCount("lp32-15C.pdf", 20);
+
+            Assert.IsTrue(Jobs[0].PageCount == 8);
+            Assert.IsTrue(Jobs[18].PageCount == 10);
+        }
     }
 }
