@@ -51,8 +51,21 @@ namespace PrintServices.DAL
         }
         public List<Job> GetJobs()
         {
-            //int i = 1;
             return Context.Jobs.ToList();
+        }
+        public void UpdatePageCount(string filename, int pagecount)
+        {
+            Job foundJob = Context.Jobs.SingleOrDefault(j => j.FileName == filename);
+            if (foundJob.PrintQueue == "ce5793_RB-2_pdf" ||
+                foundJob.PrintQueue == "ce5786_RB-2_pdf" ||
+                foundJob.PrintQueue == "ce5793_FIRE-2_pdf")
+            {
+                foundJob.PageCount = pagecount/2;
+            } else
+            {
+                foundJob.PageCount = pagecount;
+            }
+            Context.SaveChanges();
         }
         public void ClearRepository()
         {
