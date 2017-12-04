@@ -32,7 +32,18 @@ namespace PrintServices
             Task RenameFiles = new Task(() => PdfHandler.handleRenaming(jobs));
             RenameFiles.Start();
             RenameFiles.Wait();
+            jobs = Counter.assignSheetCount(jobs);
 
+            foreach (Job job in jobs)
+            {
+                db.UpdatePageCount(job.FileName, job.PageCount);
+            }
+            jobs = db.GetJobs();
+
+            foreach (Job job in jobs)
+            {
+                if (job.PageCount != 0) { Console.WriteLine(job.FileName + " - " + job.PageCount); };
+            };
 
             db.ClearRepository();
 
