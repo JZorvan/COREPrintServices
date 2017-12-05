@@ -39,7 +39,7 @@ namespace PrintServices
                 worksheet.Cells[rowNum, 2] = job.PageCount;
             }
 
-            workbook.SaveAs(Filename: "c:\\PrintServices\\" + getSpreadsheetName());
+            workbook.SaveAs(Filename: AppDomain.CurrentDomain.BaseDirectory + getSpreadsheetName());
 
             workbook.Close();
             excel.Quit();
