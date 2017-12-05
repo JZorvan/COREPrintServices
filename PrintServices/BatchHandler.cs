@@ -1,4 +1,5 @@
-﻿using PrintServices.Models;
+﻿using Microsoft.Office.Interop.Excel;
+using PrintServices.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +13,11 @@ namespace PrintServices
     {
         public static void generateBatchFile(List<Job> jobs)
         {
-            string batchFile = @"C:\PrintServices\test.bat";
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
+            Console.WriteLine(Environment.CurrentDirectory);
+
+            string batchFile = Directory.GetCurrentDirectory() + "test.bat";
             
             if (File.Exists(batchFile))
             {
