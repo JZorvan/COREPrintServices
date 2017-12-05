@@ -12,7 +12,7 @@ namespace PrintServices
     {
         public static void convertToPdf()
         {
-            var wordFiles = Directory.EnumerateFiles("C:/PrintServices", "*.docx");
+            var wordFiles = Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "*.docx");
             int i = 0;
             foreach (string file in wordFiles)
             {
