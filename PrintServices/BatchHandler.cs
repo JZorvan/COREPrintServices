@@ -13,7 +13,7 @@ namespace PrintServices
     {
         public static void generateBatchFile(List<Job> jobs)
         {
-            string batchFile = AppDomain.CurrentDomain.BaseDirectory + "test.bat";
+            string batchFile = AppDomain.CurrentDomain.BaseDirectory + "print.bat";
             
             if (File.Exists(batchFile))
             {
