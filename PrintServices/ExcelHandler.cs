@@ -15,7 +15,7 @@ namespace PrintServices
         {
             string today = DateTime.Now.ToString("MM.dd.yyyy");
             
-            string filename = today + " TESTMasterList.xlsm";
+            string filename = today + " MasterList.xlsm";
             Console.WriteLine(filename);
             return filename;
         }
