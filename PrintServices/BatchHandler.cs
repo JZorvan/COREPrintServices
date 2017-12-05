@@ -13,11 +13,7 @@ namespace PrintServices
     {
         public static void generateBatchFile(List<Job> jobs)
         {
-            Console.WriteLine(Directory.GetCurrentDirectory());
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
-            Console.WriteLine(Environment.CurrentDirectory);
-
-            string batchFile = Directory.GetCurrentDirectory() + "test.bat";
+            string batchFile = AppDomain.CurrentDomain.BaseDirectory + "test.bat";
             
             if (File.Exists(batchFile))
             {
