@@ -44,6 +44,10 @@ namespace PrintServices
             Task PopulateSpreadsheet = new Task(() => ExcelHandler.populateSpreadsheet(jobs));
             PopulateSpreadsheet.Start();
             PopulateSpreadsheet.Wait();
+            Task GenerateBatchFile = new Task(() => BatchHandler.generateBatchFile(jobs));
+            GenerateBatchFile.Start();
+            GenerateBatchFile.Wait();
+
 
             db.ClearRepository();
 
