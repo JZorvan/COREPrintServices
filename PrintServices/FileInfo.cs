@@ -13,7 +13,7 @@ namespace PrintServices
         public static void removeFilesToDelete()
         {
             Application excel = new Application();
-            Workbook workbook = excel.Workbooks.Open("C:/PrintServices\\JobsToDelete.xlsx", ReadOnly: true, Editable: false);
+            Workbook workbook = excel.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\Application Files\JobsToDelete.xlsx", ReadOnly: true, Editable: false);
             Worksheet worksheet = workbook.Worksheets.Item[1] as Worksheet;
             if (worksheet == null)
                 return;
@@ -24,7 +24,7 @@ namespace PrintServices
             for (int i = 1; i <= totalRows; i++)
             {
                 pattern = range.Cells[i, 1].Value;
-                foreach (string file in Directory.EnumerateFiles("C:/PrintServices", pattern))
+                foreach (string file in Directory.EnumerateFiles(Environment.CurrentDirectory, pattern))
                 {
                     File.Delete(file);
                 }
