@@ -23,7 +23,7 @@ namespace PrintServices
         {
             Application excel = new Application();
             excel.DisplayAlerts = false;
-            Workbook workbook = excel.Workbooks.Open("C:/PrintServices\\MasterList.xlsm", ReadOnly: false, Editable: true);
+            Workbook workbook = excel.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\Application Files\MasterList.xlsm", ReadOnly: false, Editable: true);
             Worksheet worksheet = workbook.Worksheets.Item[1] as Worksheet;
             if (worksheet == null)
                 return;
