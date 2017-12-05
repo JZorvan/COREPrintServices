@@ -50,22 +50,7 @@ namespace PrintServices
 
 
             db.ClearRepository();
-
-            //Notes on making the path automatic for other users:
-            //string path = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            //string filepath = Path.GetFullPath(Path.Combine(path, ".."));
-            //Console.WriteLine(filepath);
-
-
-
-            //foreach (Task t in tasks)
-            //{
-            //    t.Start();
-            //    t.Wait();
-            //}
-
             Console.ReadKey();
-
         }
     }
 }
