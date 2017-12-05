@@ -18,8 +18,7 @@ namespace PrintServices
             JobRepo db = new JobRepo();
             Task ImportMasterSpreadsheet = new Task(() => db.ImportMasterSpreadsheet());
             Task ConvertToPdf = new Task(() => WordHandler.convertToPdf());
-            Task PopulateSpreadsheet = new Task(() => ExcelHandler.populateSpreadsheet());
-
+            
             ImportMasterSpreadsheet.Start();
             ImportMasterSpreadsheet.Wait();
             List<Job> jobs = db.GetJobs();
@@ -36,14 +35,15 @@ namespace PrintServices
 
             foreach (Job job in jobs)
             {
-                db.UpdatePageCount(job.FileName, job.PageCount);
+                if (job.PageCount != 0)
+                {
+                    db.UpdatePageCount(job.FileName, job.PageCount);
+                }
             }
             jobs = db.GetJobs();
-
-            foreach (Job job in jobs)
-            {
-                if (job.PageCount != 0) { Console.WriteLine(job.FileName + " - " + job.PageCount); };
-            };
+            Task PopulateSpreadsheet = new Task(() => ExcelHandler.populateSpreadsheet(jobs));
+            PopulateSpreadsheet.Start();
+            PopulateSpreadsheet.Wait();
 
             db.ClearRepository();
 
