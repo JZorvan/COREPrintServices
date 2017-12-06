@@ -39,7 +39,14 @@ namespace PrintServices
                 worksheet.Cells[rowNum, 2] = job.PageCount;
             }
 
-            workbook.SaveAs(Filename: @"F:\PrintServices\" + getSpreadsheetName());
+            string filename = @"F:\PrintServices\" + getSpreadsheetName();
+
+            if (File.Exists(filename))
+            {
+                File.Delete(filename);
+            }
+
+            workbook.SaveAs(Filename: filename);
 
             workbook.Close();
             excel.Quit();
