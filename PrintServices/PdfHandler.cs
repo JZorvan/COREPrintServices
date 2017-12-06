@@ -16,7 +16,7 @@ namespace PrintServices
         public static List<string> getFiles()
         {
             List<string> files = new List<string>();
-            foreach (string file in Directory.EnumerateFiles(AppDomain.CurrentDomain.BaseDirectory, "*.pdf"))
+            foreach (string file in Directory.EnumerateFiles(@"F:\PrintServices", "*.pdf"))
             {
                 files.Add(file);
             }
@@ -38,7 +38,7 @@ namespace PrintServices
         }
         public static void mergePdfs(List<string> duplicates, string jobName)
         {
-            string mergedFile = AppDomain.CurrentDomain.BaseDirectory + jobName + ".pdf";
+            string mergedFile = @"F:\PrintServices\" + jobName + ".pdf";
             using (FileStream stream = new FileStream(mergedFile, FileMode.Create))
             using (Document doc = new Document())
             using (PdfCopy pdf = new PdfCopy(doc, stream))
@@ -72,7 +72,7 @@ namespace PrintServices
                 string result = files.Find(f => f.Contains(filenameTrimmer(job)));
                 if (result != null)
                 {
-                    renameFile(result, AppDomain.CurrentDomain.BaseDirectory + job.FileName);
+                    renameFile(result, @"F:\PrintServices\" + job.FileName);
                 } else { continue; }
             }
         }

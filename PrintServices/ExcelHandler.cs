@@ -23,7 +23,7 @@ namespace PrintServices
         {
             Application excel = new Application();
             excel.DisplayAlerts = false;
-            Workbook workbook = excel.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\Application Files\MasterList.xlsm", ReadOnly: false, Editable: true);
+            Workbook workbook = excel.Workbooks.Open(@"F:\PrintServices\Application Files\MasterList.xlsm", ReadOnly: false, Editable: true);
             Worksheet worksheet = workbook.Worksheets.Item[1] as Worksheet;
             if (worksheet == null)
                 return;
@@ -39,7 +39,7 @@ namespace PrintServices
                 worksheet.Cells[rowNum, 2] = job.PageCount;
             }
 
-            workbook.SaveAs(Filename: AppDomain.CurrentDomain.BaseDirectory + getSpreadsheetName());
+            workbook.SaveAs(Filename: @"F:\PrintServices\" + getSpreadsheetName());
 
             workbook.Close();
             excel.Quit();

@@ -24,7 +24,7 @@ namespace PrintServices.DAL
         public void ImportMasterSpreadsheet()
         {
             Application excel = new Application();
-            Workbook workbook = excel.Workbooks.Open(AppDomain.CurrentDomain.BaseDirectory + @"\Application Files\MasterList.xlsm", ReadOnly: true, Editable: false);
+            Workbook workbook = excel.Workbooks.Open(@"F:\PrintServices\Application Files\MasterList.xlsm", ReadOnly: true, Editable: false);
             Worksheet worksheet = workbook.Worksheets.Item[1] as Worksheet;
             if (worksheet == null)
                 return;
