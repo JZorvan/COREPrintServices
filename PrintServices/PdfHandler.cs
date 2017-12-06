@@ -7,28 +7,38 @@ using System.Threading.Tasks;
 using iTextSharp;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using PrintServices.Models;
 
 namespace PrintServices
 {
     class PdfHandler
     {
-        public static void findDuplicates()
+        public static List<string> getFiles()
         {
-            string[] pdfFiles = Directory.GetFiles("C:/PrintServices", "*.pdf");
-            List<string> duplicates = new List<string>();
-            foreach (string jobName in FileInfo.allFiles)
+            List<string> files = new List<string>();
+            foreach (string file in Directory.EnumerateFiles(@"F:\PrintServices", "*.pdf"))
             {
-                var result = Array.FindAll(pdfFiles, s => s.Contains(jobName));
+                files.Add(file);
+            }
+            return files;
+        }
+        public static void handleDuplicates(List<Job> joblist)
+        {
+            List<string> files = getFiles();
+            List<string> duplicates = new List<string>();
+            foreach (Job job in joblist)
+            {
+                var result = files.FindAll(f => f.Contains(filenameTrimmer(job)));
                 if (result.Count() > 1)
                 {
                     duplicates = result.ToList();
-                    mergePdfs(duplicates, jobName, result.Count());
-                } 
+                    mergePdfs(duplicates, filenameTrimmer(job));
+                }
             }
         }
-        public static void mergePdfs(List<string> duplicateFiles, string jobName, int numDocs)
+        public static void mergePdfs(List<string> duplicates, string jobName)
         {
-            string mergedFile = "C:/PrintServices\\" + jobName + ".pdf";
+            string mergedFile = @"F:\PrintServices\" + jobName + ".pdf";
             using (FileStream stream = new FileStream(mergedFile, FileMode.Create))
             using (Document doc = new Document())
             using (PdfCopy pdf = new PdfCopy(doc, stream))
@@ -38,7 +48,7 @@ namespace PrintServices
                 PdfReader reader = null;
                 PdfImportedPage page = null;
 
-                duplicateFiles.ForEach(file =>
+                duplicates.ForEach(file =>
                 {
                     reader = new PdfReader(file);
 
@@ -52,54 +62,23 @@ namespace PrintServices
                     reader.Close();
                     File.Delete(file);
                 });
-                Console.WriteLine("There were " + numDocs + " files for the " + jobName + " job that were merged into one file.");
             }
         }
-        public static void renameFiles()
+        public static void handleRenaming(List<Job> jobs)
         {
-            foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
+            List<string> files = getFiles();
+            foreach (Job job in jobs)
             {
-                File.Move(file, getNewFilename(file));
+                string result = files.Find(f => f.Contains(filenameTrimmer(job)));
+                if (result != null)
+                {
+                    renameFile(result, @"F:\PrintServices\" + job.FileName);
+                } else { continue; }
             }
         }
-        public static string getNewFilename(string file)
+        public static void renameFile(string file, string newFilename)
         {
-            if (file.Contains("lp32-15C"))
-            {
-                return file.Substring(0, 25) + ".pdf";
-            }
-            else if (file.Contains("lp32-19C"))
-            {
-                return file.Substring(0, 25) + ".pdf";
-            }
-            else if (file.Contains("lp59-15C"))
-            {
-                return file.Substring(0, 25) + ".pdf";
-            }
-            else if (file.Contains("lp59-1601B"))
-            {
-                return file.Substring(0, 27) + ".pdf";
-            }
-            else if (file.Contains("lp59-3502B"))
-            {
-                return file.Substring(0, 27) + ".pdf";
-            }
-            else if (file.Contains("25CAN001"))
-            {
-                return "C:/PrintServices\\25CAN001.pdf";
-            }
-            else if (file.Contains("25CAA001"))
-            {
-                return "C:/PrintServices\\25CAA001.pdf";
-            }
-            else if (file.Contains("tndc06"))
-            {
-                return file.Substring(0, 28) + ".pdf";
-            }
-            else
-            {
-                return file.Substring(0, 26) + ".pdf";
-            }
+            File.Move(file, newFilename);
         }
         public static string filenameTrimmer(string file)
         {
@@ -107,6 +86,15 @@ namespace PrintServices
             string trimmedFilename = "";
 
             trimmedFilename = file.Substring(17).TrimEnd(pdfString);
+
+            return trimmedFilename;
+        }
+        public static string filenameTrimmer(Job job)
+        {
+            char[] pdfString = { '.', 'p', 'd', 'f' };
+            string trimmedFilename = "";
+
+            trimmedFilename = job.FileName.TrimEnd(pdfString);
 
             return trimmedFilename;
         }

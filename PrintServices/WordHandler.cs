@@ -12,7 +12,7 @@ namespace PrintServices
     {
         public static void convertToPdf()
         {
-            var wordFiles = Directory.EnumerateFiles("C:/PrintServices", "*.docx");
+            var wordFiles = Directory.EnumerateFiles(@"F:\PrintServices", "*.docx");
             int i = 0;
             foreach (string file in wordFiles)
             {
@@ -26,8 +26,6 @@ namespace PrintServices
                     File.Delete(file);
                 }
             }
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("\r\n" + i + " files have been converted to Pdf format.\r\n");
         }
     }
 }

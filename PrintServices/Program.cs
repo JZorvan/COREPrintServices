@@ -5,34 +5,52 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 using System.IO;
+using PrintServices.DAL;
+using PrintServices.Models;
+using System.Data.Entity;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PrintServices
 {
     class Program
     {
         static void Main(string[] args)
-        {   //Notes on making the path automatic for other users:
-            //string path = Path.GetDirectoryName(AppDomain.CurrentDomain.BaseDirectory);
-            //string filepath = Path.GetFullPath(Path.Combine(path, ".."));
-            //Console.WriteLine(filepath);
+        {
+            JobRepo db = new JobRepo();
+            Task ImportMasterSpreadsheet = new Task(() => db.ImportMasterSpreadsheet());
+            Task ConvertToPdf = new Task(() => WordHandler.convertToPdf());
 
-            FileInfo.remove3502AA();
+            ImportMasterSpreadsheet.Start();
+            ImportMasterSpreadsheet.Wait();
+            List<Job> jobs = db.GetJobs();
+            FileInfo.removeFilesToDelete();
+            ConvertToPdf.Start();
+            ConvertToPdf.Wait();
+            Task handleDuplicates = new Task(() => PdfHandler.handleDuplicates(jobs));
+            handleDuplicates.Start();
+            handleDuplicates.Wait();
+            Task RenameFiles = new Task(() => PdfHandler.handleRenaming(jobs));
+            RenameFiles.Start();
+            RenameFiles.Wait();
+            jobs = Counter.assignSheetCount(jobs);
 
-            List<Task> tasks = new List<Task>()
+            foreach (Job job in jobs)
             {
-                new Task(() => WordHandler.convertToPdf()),
-                new Task(() => PdfHandler.findDuplicates()),
-                new Task(() => PdfHandler.renameFiles()),
-                new Task(() => ExcelHandler.populateSpreadsheet()),
-                new Task(() => ConsoleHandler.printToConsole())
-            };
-
-            foreach (Task t in tasks)
-            {
-                t.Start();
-                t.Wait();
+                if (job.PageCount != 0)
+                {
+                    db.UpdatePageCount(job.FileName, job.PageCount);
+                }
             }
+            jobs = db.GetJobs();
+            Task PopulateSpreadsheet = new Task(() => ExcelHandler.populateSpreadsheet(jobs));
+            PopulateSpreadsheet.Start();
+            PopulateSpreadsheet.Wait();
+            Task GenerateBatchFile = new Task(() => BatchHandler.generateBatchFile(jobs));
+            GenerateBatchFile.Start();
+            GenerateBatchFile.Wait();
 
+
+            db.ClearRepository();
             Console.ReadKey();
         }
     }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Office.Interop.Excel;
 using System.IO;
+using PrintServices.Models;
 
 namespace PrintServices
 {
@@ -18,48 +19,28 @@ namespace PrintServices
             Console.WriteLine(filename);
             return filename;
         }
-        public static void populateSpreadsheet()
+        public static void populateSpreadsheet(List<Job> jobs)
         {
-            Console.WriteLine("Starting to populate spreadsheet.");
             Application excel = new Application();
             excel.DisplayAlerts = false;
-            Workbook workbook = excel.Workbooks.Open("C:/PrintServices\\MasterList.xlsm", ReadOnly: false, Editable: true);
+            Workbook workbook = excel.Workbooks.Open(@"F:\PrintServices\Application Files\MasterList.xlsm", ReadOnly: false, Editable: true);
             Worksheet worksheet = workbook.Worksheets.Item[1] as Worksheet;
             if (worksheet == null)
                 return;
 
-            Dictionary<string, string> countDictionary = new Dictionary<string, string>();
-            string fileName = "";
-            string pageCount = "";
-            foreach (string file in Directory.EnumerateFiles("C:/PrintServices", "*.pdf"))
-            {
-                fileName = PdfHandler.filenameTrimmer(file);
-
-                if (FileInfo.TwoSidedFiles.Contains(file))
-                {
-                    pageCount = (Counter.getNumberOfPages(file) / 2).ToString();
-                }
-                else
-                {
-                    pageCount = (Counter.getNumberOfPages(file)).ToString();
-                }
-
-                countDictionary.Add(fileName, pageCount);
-                Counter.AddToTotalCount(file, Counter.getNumberOfPages(file));
-            }
-
-            Range jobColumn = worksheet.Columns["A"];
+            Range nameColumn = worksheet.Columns["A"];
+            Range countColumn = worksheet.Columns["B"];
             Range foundJob = null;
-            foreach (KeyValuePair<string, string> kvp in countDictionary)
+
+            foreach (Job job in jobs)
             {
-                foundJob = jobColumn.Find(kvp.Key);
+                foundJob = nameColumn.Find(job.FileName);
                 int rowNum = Convert.ToInt32(foundJob.Address.Substring(3));
-                worksheet.Cells[rowNum, 2] = kvp.Value;
+                worksheet.Cells[rowNum, 2] = job.PageCount;
             }
 
-            workbook.SaveAs(Filename: "c:\\PrintServices\\" + getSpreadsheetName());
+            workbook.SaveAs(Filename: @"F:\PrintServices\" + getSpreadsheetName());
 
-            excel.DisplayAlerts = true;
             workbook.Close();
             excel.Quit();
             System.Runtime.InteropServices.Marshal.ReleaseComObject(worksheet);
