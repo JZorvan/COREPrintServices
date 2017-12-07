@@ -94,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatchHandler.cs" />
+    <Compile Include="ConsoleHandler.cs" />
     <Compile Include="Counter.cs" />
     <Compile Include="DAL\JobContext.cs" />
     <Compile Include="DAL\JobRepo.cs" />
