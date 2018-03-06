@@ -10,21 +10,32 @@ namespace PrintServices
 {
     class WordHandler
     {
-        public static void convertToPdf()
+        public static void convertToPdf()  // Converts Word files to PDF files
         {
-            var wordFiles = Directory.EnumerateFiles(@"F:\PrintServices", "*.docx");
-            int i = 0;
-            foreach (string file in wordFiles)
+            ConsoleHandler.Print("wordfiles");
+            try
             {
-                if (Path.GetFileName(file).StartsWith("~") == false)
+                var wordFiles = Directory.EnumerateFiles(@"C:\PrintServices", "*.docx");
+                foreach (string file in wordFiles)
                 {
-                    Word2Pdf converter = new Word2Pdf();
-                    converter.InputLocation = file;
-                    converter.OutputLocation = Path.ChangeExtension(file, ".pdf");
-                    converter.Word2PdfCOnversion();
-                    i++;
-                    File.Delete(file);
+                    if (Path.GetFileName(file).StartsWith("~") == false)
+                    {
+                        Word2Pdf converter = new Word2Pdf();
+                        converter.InputLocation = file;
+                        converter.OutputLocation = Path.ChangeExtension(file, ".pdf");
+                        converter.Word2PdfCOnversion();
+                        File.Delete(file);
+                    }
                 }
+                ConsoleHandler.Print("wordfilessuccess");
+            }
+            catch (System.Runtime.InteropServices.COMException)
+            {
+                Console.WriteLine();
+                Console.WriteLine();
+                ConsoleHandler.Print("error");
+                ConsoleHandler.Print("open");
+                ConsoleHandler.Print("exit");
             }
         }
     }

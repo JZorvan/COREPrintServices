@@ -13,32 +13,35 @@ namespace PrintServices
 {
     class PdfHandler
     {
-        public static List<string> getFiles()
+        public static List<string> getFiles()  // Gets PDF files and puts them in a list for easy perusal.
         {
             List<string> files = new List<string>();
-            foreach (string file in Directory.EnumerateFiles(@"F:\PrintServices", "*.pdf"))
+            foreach (string file in Directory.EnumerateFiles(@"C:\PrintServices", "*.pdf"))
             {
                 files.Add(file);
             }
             return files;
         }
-        public static void handleDuplicates(List<Job> joblist)
+        public static void handleDuplicates(List<Job> joblist)  // Finds the duplicate files
         {
+            ConsoleHandler.Print("duplicates");
             List<string> files = getFiles();
             List<string> duplicates = new List<string>();
+
             foreach (Job job in joblist)
             {
-                var result = files.FindAll(f => f.Contains(filenameTrimmer(job)));
+                List<string> result = files.FindAll(f => f.Contains(filenameTrimmer(job)));
                 if (result.Count() > 1)
                 {
                     duplicates = result.ToList();
-                    mergePdfs(duplicates, filenameTrimmer(job));
+                    mergePdfs(duplicates, job);
                 }
             }
+            ConsoleHandler.Print("duplicatessuccess");
         }
-        public static void mergePdfs(List<string> duplicates, string jobName)
+        public static void mergePdfs(List<string> duplicates, Job job)  // Merges any duplicates into a new file, deleting the originals
         {
-            string mergedFile = @"F:\PrintServices\" + jobName + ".pdf";
+            string mergedFile = @"C:\PrintServices\" + job.FileName;
             using (FileStream stream = new FileStream(mergedFile, FileMode.Create))
             using (Document doc = new Document())
             using (PdfCopy pdf = new PdfCopy(doc, stream))
@@ -63,24 +66,24 @@ namespace PrintServices
                     File.Delete(file);
                 });
             }
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("     {0} files for the {1} Job were combined into one file.", duplicates.Count, filenameTrimmer(job));
         }
-        public static void handleRenaming(List<Job> jobs)
+        public static void renameFiles(List<Job> jobs)  // Renames PDF to the simplified format
         {
+            ConsoleHandler.Print("rename");
             List<string> files = getFiles();
             foreach (Job job in jobs)
             {
                 string result = files.Find(f => f.Contains(filenameTrimmer(job)));
                 if (result != null)
                 {
-                    renameFile(result, @"F:\PrintServices\" + job.FileName);
+                    File.Move(result, @"C:\PrintServices\" + job.FileName);
                 } else { continue; }
             }
+            ConsoleHandler.Print("renamed");
         }
-        public static void renameFile(string file, string newFilename)
-        {
-            File.Move(file, newFilename);
-        }
-        public static string filenameTrimmer(string file)
+        public static string filenameTrimmer(string file) // Helper method to remove portions of a filename
         {
             char[] pdfString = { '.', 'p', 'd', 'f' };
             string trimmedFilename = "";
@@ -89,7 +92,7 @@ namespace PrintServices
 
             return trimmedFilename;
         }
-        public static string filenameTrimmer(Job job)
+        public static string filenameTrimmer(Job job) // Helper method to remove portions of a filename
         {
             char[] pdfString = { '.', 'p', 'd', 'f' };
             string trimmedFilename = "";

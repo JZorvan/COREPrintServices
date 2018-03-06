@@ -12,13 +12,14 @@ namespace PrintServices
 {
     class Counter
     {
-        public static int readNumberOfPages(string filename)
+        public static int readNumberOfPages(string filename)  // reads the pagecount a PDF
         {
             PdfReader pdfReader = new PdfReader(filename);
             return pdfReader.NumberOfPages;
         }
-        public static List<Job> assignSheetCount(List<Job> jobs)
+        public static List<Job> assignSheetCount(List<Job> jobs) // adds the pagecount of each file to the list of jobs
         {
+            ConsoleHandler.Print("count");
             List<string> files = PdfHandler.getFiles();
             foreach (string file in files)
             {

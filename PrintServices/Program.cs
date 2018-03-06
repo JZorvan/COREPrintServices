@@ -16,10 +16,16 @@ namespace PrintServices
     {
         static void Main(string[] args)
         {
-            JobRepo db = new JobRepo();
+            ConsoleHandler.Print("greeting");
+
+            JobRepo db = new JobRepo(new JobContext());
+            db.ClearRepository();
+
             Task ImportMasterSpreadsheet = new Task(() => db.ImportMasterSpreadsheet());
             Task ConvertToPdf = new Task(() => WordHandler.convertToPdf());
-
+            Task TransferFiles  = new Task(() => FileInfo.transferFiles());
+            TransferFiles.Start();
+            TransferFiles.Wait();
             ImportMasterSpreadsheet.Start();
             ImportMasterSpreadsheet.Wait();
             List<Job> jobs = db.GetJobs();
@@ -29,7 +35,7 @@ namespace PrintServices
             Task handleDuplicates = new Task(() => PdfHandler.handleDuplicates(jobs));
             handleDuplicates.Start();
             handleDuplicates.Wait();
-            Task RenameFiles = new Task(() => PdfHandler.handleRenaming(jobs));
+            Task RenameFiles = new Task(() => PdfHandler.renameFiles(jobs));
             RenameFiles.Start();
             RenameFiles.Wait();
             jobs = Counter.assignSheetCount(jobs);
@@ -41,6 +47,7 @@ namespace PrintServices
                     db.UpdatePageCount(job.FileName, job.PageCount);
                 }
             }
+            ConsoleHandler.Print("counted");
             jobs = db.GetJobs();
             Task PopulateSpreadsheet = new Task(() => ExcelHandler.populateSpreadsheet(jobs));
             PopulateSpreadsheet.Start();
@@ -49,9 +56,9 @@ namespace PrintServices
             GenerateBatchFile.Start();
             GenerateBatchFile.Wait();
 
-
             db.ClearRepository();
-            Console.ReadKey();
+            ConsoleHandler.Print("done");
+            ConsoleHandler.Print("exit");
         }
     }
 }

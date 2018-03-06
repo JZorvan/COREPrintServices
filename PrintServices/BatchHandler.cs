@@ -13,7 +13,8 @@ namespace PrintServices
     {
         public static void generateBatchFile(List<Job> jobs)
         {
-            string batchFile = @"F:\PrintServices\print.bat";
+            ConsoleHandler.Print("batch");
+            string batchFile = @"C:\PrintServices\print.bat";
             
             if (File.Exists(batchFile))
             {
@@ -29,12 +30,13 @@ namespace PrintServices
                         StringBuilder command = new StringBuilder();
                         command.Append("LPR -S emtexvip1.nash.tenn -P ");
                         command.Append(job.PrintQueue);
-                        command.Append(@" F:\PrintServices\");
+                        command.Append(@" C:\PrintServices\");
                         command.Append(job.FileName);
                         writer.WriteLine(command.ToString());
                     }
                 }
             }
+            ConsoleHandler.Print("batched");
         }
     }
 }
