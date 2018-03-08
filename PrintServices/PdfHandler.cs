@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using iTextSharp;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using PrintServices.Models;
+using static PrintServices.ExcelHandler;
 
 namespace PrintServices
 {
@@ -22,26 +19,26 @@ namespace PrintServices
             }
             return files;
         }
-        public static void handleDuplicates(List<Job> joblist)  // Finds the duplicate files
+        public static void handleDuplicates(List<KeyValuePair<string, ValuePair>> jobsAndCounts)  // Finds the duplicate files
         {
             ConsoleHandler.Print("duplicates");
             List<string> files = getFiles();
             List<string> duplicates = new List<string>();
 
-            foreach (Job job in joblist)
+            foreach (KeyValuePair<string, ValuePair> pair in jobsAndCounts)
             {
-                List<string> result = files.FindAll(f => f.Contains(filenameTrimmer(job)));
+                List<string> result = files.FindAll(f => f.Contains(filenameTrimmer(pair)));
                 if (result.Count() > 1)
                 {
                     duplicates = result.ToList();
-                    mergePdfs(duplicates, job);
+                    mergePdfs(duplicates, pair);
                 }
             }
             ConsoleHandler.Print("duplicatessuccess");
         }
-        public static void mergePdfs(List<string> duplicates, Job job)  // Merges any duplicates into a new file, deleting the originals
+        public static void mergePdfs(List<string> duplicates, KeyValuePair<string, ValuePair> pair)  // Merges any duplicates into a new file, deleting the originals
         {
-            string mergedFile = @"C:\PrintServices\" + job.FileName;
+            string mergedFile = @"C:\PrintServices\" + pair.Key;
             using (FileStream stream = new FileStream(mergedFile, FileMode.Create))
             using (Document doc = new Document())
             using (PdfCopy pdf = new PdfCopy(doc, stream))
@@ -67,18 +64,18 @@ namespace PrintServices
                 });
             }
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("     {0} files for the {1} Job were combined into one file.", duplicates.Count, filenameTrimmer(job));
+            Console.WriteLine("     {0} files for the {1} Job were combined into one file.", duplicates.Count, filenameTrimmer(pair));
         }
-        public static void renameFiles(List<Job> jobs)  // Renames PDF to the simplified format
+        public static void renameFiles(List<KeyValuePair<string, ValuePair>> jobsAndCounts)  // Renames PDF to the simplified format
         {
             ConsoleHandler.Print("rename");
             List<string> files = getFiles();
-            foreach (Job job in jobs)
+            foreach (KeyValuePair<string, ValuePair> pair in jobsAndCounts)
             {
-                string result = files.Find(f => f.Contains(filenameTrimmer(job)));
+                string result = files.Find(f => f.Contains(filenameTrimmer(pair)));
                 if (result != null)
                 {
-                    File.Move(result, @"C:\PrintServices\" + job.FileName);
+                    File.Move(result, @"C:\PrintServices\" + pair.Key);
                 } else { continue; }
             }
             ConsoleHandler.Print("renamed");
@@ -92,12 +89,12 @@ namespace PrintServices
 
             return trimmedFilename;
         }
-        public static string filenameTrimmer(Job job) // Helper method to remove portions of a filename
+        public static string filenameTrimmer(KeyValuePair<string, ValuePair> pair) // Helper method to remove portions of a filename
         {
             char[] pdfString = { '.', 'p', 'd', 'f' };
             string trimmedFilename = "";
 
-            trimmedFilename = job.FileName.TrimEnd(pdfString);
+            trimmedFilename = pair.Key.TrimEnd(pdfString);
 
             return trimmedFilename;
         }

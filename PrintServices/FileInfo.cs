@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using Microsoft.Office.Interop.Excel;
+using static PrintServices.ExcelHandler;
 
 namespace PrintServices
 {
@@ -39,6 +37,41 @@ namespace PrintServices
                 ConsoleHandler.Print("liar");
             }
 
+        }
+        public static void checkForUnknowns(List<KeyValuePair<string, ValuePair>> jobs)  // Checks if there are files that aren't referenced on the Masterlist
+        {
+            List<string> acceptedFiles = new List<string>();
+            foreach (KeyValuePair<string, ValuePair> job in jobs)
+            {
+                acceptedFiles.Add(job.Key);
+            }
+
+            List<string> files = PdfHandler.getFiles();
+            List<string> unknownFiles = new List<string>();
+            foreach (string file in files)
+            {
+                if (!acceptedFiles.Contains(PdfHandler.filenameTrimmer(file) + ".pdf") && !PdfHandler.filenameTrimmer(file).StartsWith("~"))
+                {
+                    unknownFiles.Add(PdfHandler.filenameTrimmer(file) + ".pdf");
+                }
+            }
+            foreach (string file in Directory.EnumerateFiles(@"C:\PrintServices", "*.docx"))
+            {
+                if (!acceptedFiles.Contains(WordHandler.filenameTrimmer(file) + ".pdf") && !WordHandler.filenameTrimmer(file).StartsWith("~"))
+                {
+                    unknownFiles.Add(file.Substring(17));
+                }
+            }
+            if (unknownFiles.Count > 0)
+            {
+                ConsoleHandler.Print("error");
+                Console.WriteLine(" {0} files were found that are not referenced on the Master Spreadsheet:", unknownFiles.Count);
+                foreach (string file in unknownFiles)
+                {
+                    Console.WriteLine("     {0}", file);
+                }
+                ConsoleHandler.Print("exit");
+            }
         }
         public static void removeFilesToDelete() // Read a spreadsheet of file patterns that need to be deleted and deletes them
         {

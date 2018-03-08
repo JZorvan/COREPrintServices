@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
 using WordToPDF;
 
@@ -38,5 +34,15 @@ namespace PrintServices
                 ConsoleHandler.Print("exit");
             }
         }
+        public static string filenameTrimmer(string file) // Helper method to remove portions of a filename
+        {
+            char[] pdfString = { '.', 'd', 'o', 'c', 'x'};
+            string trimmedFilename = "";
+
+            trimmedFilename = file.Substring(17).TrimEnd(pdfString);
+
+            return trimmedFilename;
+        }
     }
+
 }

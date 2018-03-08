@@ -1,11 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintServices", "PrintServices.csproj", "{9AC6A628-4841-47C8-8C5C-7C048279C8E7}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrintServices.Tests", "..\PrintServices.Test\PrintServices.Tests.csproj", "{ADCFC3E8-99FF-41EA-9312-F4AA792A2C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		{9AC6A628-4841-47C8-8C5C-7C048279C8E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9AC6A628-4841-47C8-8C5C-7C048279C8E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9AC6A628-4841-47C8-8C5C-7C048279C8E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ADCFC3E8-99FF-41EA-9312-F4AA792A2C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ADCFC3E8-99FF-41EA-9312-F4AA792A2C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ADCFC3E8-99FF-41EA-9312-F4AA792A2C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ADCFC3E8-99FF-41EA-9312-F4AA792A2C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

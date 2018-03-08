@@ -1,17 +1,13 @@
-﻿using Microsoft.Office.Interop.Excel;
-using PrintServices.Models;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using static PrintServices.ExcelHandler;
 
 namespace PrintServices
 {
     class BatchHandler
     {
-        public static void generateBatchFile(List<Job> jobs)
+        public static void generateBatchFile(List<KeyValuePair<string, ValuePair>> jobs)
         {
             ConsoleHandler.Print("batch");
             string batchFile = @"C:\PrintServices\print.bat";
@@ -23,15 +19,15 @@ namespace PrintServices
 
             using (StreamWriter writer = File.CreateText(batchFile))
             {
-                foreach (Job job in jobs)
+                foreach (KeyValuePair<string, ValuePair> pair in jobs)
                 {
-                    if (job.PageCount > 0)
+                    if (pair.Value.pageCount > 0)
                     {
                         StringBuilder command = new StringBuilder();
                         command.Append("LPR -S emtexvip1.nash.tenn -P ");
-                        command.Append(job.PrintQueue);
+                        command.Append(pair.Value.printQueue);
                         command.Append(@" C:\PrintServices\");
-                        command.Append(job.FileName);
+                        command.Append(pair.Key);
                         writer.WriteLine(command.ToString());
                     }
                 }

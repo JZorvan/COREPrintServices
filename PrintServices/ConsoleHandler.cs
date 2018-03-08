@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace PrintServices
 {
@@ -38,11 +34,6 @@ namespace PrintServices
                     Thread.Sleep(10000);
                     Environment.Exit(0);
                     break;
-                case "clear":  // ClearRepository() action
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.WriteLine(" The database has been cleared of any residual data.");
-                    Console.WriteLine();
-                    break;
                 case "import":  // ImportMasterSpreadsheet() start
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(" Reading and importing the data from the MasterList...");
@@ -69,6 +60,11 @@ namespace PrintServices
                     Console.Write(" but there aren't any of those today.");
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.WriteLine();
+                    Console.WriteLine();
+                    break;
+                case "addfiles":
+                    Console.WriteLine();
+                    Console.WriteLine(" Please research these before restarting the program.");
                     Console.WriteLine();
                     break;
                 case "wordfiles":  // convertToPdf() start
@@ -115,6 +111,17 @@ namespace PrintServices
                     Console.WriteLine();
                     Console.WriteLine();
                     break;
+                case "spreadsheet":  // populateSpreadsheet() start
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.Write(" Creating a completed MasterList Spreaksheet for today...");
+                    break;
+                case "spreadsheeted": // populateSpreadsheet() success
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.Write(" Complete!");
+                    Console.ForegroundColor = ConsoleColor.White;
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    break;
                 case "batch":  // generateBatchFile() start
                     Console.ForegroundColor = ConsoleColor.White;
                     Console.Write(" Creating a batch file for you to run...");
@@ -155,18 +162,6 @@ namespace PrintServices
                     Console.ReadKey();
                     Environment.Exit(0);
                     break;
-                //case "spreadsheet":
-                //    Console.ForegroundColor = ConsoleColor.White;
-                //    Console.WriteLine("Today's MasterList spreadsheet has been created.");
-                //    Console.WriteLine("Please email this file when ready.");
-                //    Console.WriteLine();
-                //    break;
-                //case "batch":
-                //    Console.ForegroundColor = ConsoleColor.White;
-                //    Console.WriteLine(@"The batch file, 'print.bat', has been created.");
-                //    Console.WriteLine("Please run the batch file when ready.");
-                //    Console.WriteLine();
-                //    break;
             }
         }
     }
